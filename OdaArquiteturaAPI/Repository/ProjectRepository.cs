@@ -1,4 +1,5 @@
-﻿using OdaArquiteturaAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OdaArquiteturaAPI.Data;
 using OdaArquiteturaAPI.Entity;
 using OdaArquiteturaAPI.Repository.Interfaces;
 
@@ -11,28 +12,51 @@ public class ProjectRepository : IProjectRepository
         _dbContext = odaDBContext;
     }
 
-    public Task<List<Project>> GetAllProjects()
+    public async Task<List<Project>> GetAllProjects()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Projects.ToListAsync();
     }
 
-    public Task<Project> GetProjectById(int id)
+    public async Task<Project> GetProjectById(int id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Projects.FirstOrDefaultAsync(obj => obj.Id == id);
     }
 
-    public Task<Project> AddProject(Project project)
+    public async Task<Project> AddProject(Project project)
     {
-        throw new NotImplementedException();
+        _dbContext.Projects.Add(project);
+        _dbContext.SaveChanges();
+        return project;
     }
 
-    public Task<bool> DeleteProject(int id)
+    public async Task<bool> DeleteProject(int id)
     {
-        throw new NotImplementedException();
+        Project projectById = await GetProjectById(id);
+        if(projectById == null)
+        {
+           throw new Exception($"Não achamos o User pelo Id: {id}");
+        }
+
+        _dbContext.Projects.Remove(projectById);
+        _dbContext.SaveChanges();
+
+        return true;
     }
 
-    public Task<Project> UpdateProject(Project project, int id)
+    public async  Task<Project> UpdateProject(Project project, int id)
     {
-        throw new NotImplementedException();
+        Project projectById = await GetProjectById(id);
+        if (projectById == null)
+        {
+            throw new Exception($"Não achamos o User pelo Id: {id}");
+        }
+
+        projectById.Name = project.Name;
+        projectById.Description = project.Description;
+        projectById.Status = project.Status;
+
+        _dbContext.Update(projectById);
+        _dbContext.SaveChanges();
+        return projectById;
     }
 }

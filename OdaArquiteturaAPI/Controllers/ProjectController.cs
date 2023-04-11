@@ -37,4 +37,19 @@ public class ProjectController : ControllerBase
         }
         return Ok(project);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Project>> CreateProject([FromBody]Project projectPost) {
+        return await _projectRepository.AddProject(projectPost);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Project>> EditProject([FromBody] Project projectUpdate , int id) {
+        return await _projectRepository.UpdateProject(projectUpdate, id);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> DeleteProjectId(int id) {
+        return await _projectRepository.DeleteProject(id);
+    }
 }
