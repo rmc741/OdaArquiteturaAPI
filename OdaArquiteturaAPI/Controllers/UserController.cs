@@ -28,7 +28,7 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
-        return await _userRepository.GetAllUsers();
+        return Ok(user);
     }
 
 
@@ -44,9 +44,20 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser([FromBody] User user) {
-        
-        var userRetorno =  await _userRepository.AddUser(user);
-        return Ok(userRetorno);
+    public async Task<ActionResult<User>> CreateUser([FromBody] User user) {        
+        return Ok(await _userRepository.AddUser(user));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<User>> EditUser([FromBody] User user , int id)
+    {
+        return Ok(await _userRepository.UpdateUser(user, id));     
+
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> DeleteUserById(int id)
+    {
+        return Ok(await _userRepository.DeleteUser(id));
     }
 }

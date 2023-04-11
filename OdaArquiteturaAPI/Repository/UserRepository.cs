@@ -43,6 +43,7 @@ public class UserRepository : IUserRepository
        userById.Email = user.Email;
 
         _dbContext.Users.Update(userById);
+        _dbContext.SaveChanges();
 
         return userById;
     }
