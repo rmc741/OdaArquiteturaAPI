@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OdaArquiteturaAPI.Data;
 
@@ -10,9 +11,10 @@ using OdaArquiteturaAPI.Data;
 namespace OdaArquiteturaAPI.Migrations
 {
     [DbContext(typeof(OdaDBContext))]
-    partial class OdaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230411174204_Quarta-Migration")]
+    partial class QuartaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
