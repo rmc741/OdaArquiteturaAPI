@@ -26,30 +26,38 @@ public class UserRepository : IUserRepository
 
     public async Task<User> AddUser(User user)
     {
-         _dbContext.Users.Add(user);
-         _dbContext.SaveChanges();
+        _dbContext.Users.Add(user);
+        _dbContext.SaveChanges();
         return  user;
     }
 
     public async Task<User> UpdateUser(User user, int id)
     {
         User userById = await GetUserById(id);
+        if (userById != null)
+        {
+            userById.Name = user.Name;
+            userById.Email = user.Email;
 
-       userById.Name = user.Name;
-       userById.Email = user.Email;
+            _dbContext.Users.Update(userById);
+            _dbContext.SaveChanges();
 
-        _dbContext.Users.Update(userById);
-        _dbContext.SaveChanges();
-
-        return userById;
+            return userById;
+        }
+        return null;
+       
     }
 
-    public async Task<bool> DeleteUser(int id)
+    public async Task<bool?> DeleteUser(int id)
     {
         User userById = await GetUserById(id);
-        _dbContext.Users.Remove(userById);
-        _dbContext.SaveChanges();
-        return true;
+        if (userById != null) 
+        {
+            _dbContext.Users.Remove(userById);
+            _dbContext.SaveChanges();
+            return true;
+        }
+        return null;       
     }
 
   

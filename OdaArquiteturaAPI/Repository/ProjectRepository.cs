@@ -29,26 +29,33 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
-    public async Task<bool> DeleteProject(int id)
+    public async Task<bool?> DeleteProject(int id)
     {
         Project projectById = await GetProjectById(id);
-        
-        _dbContext.Projects.Remove(projectById);
-        _dbContext.SaveChanges();
+        if (projectById != null)
+        {
+            _dbContext.Projects.Remove(projectById);
+            _dbContext.SaveChanges();
 
-        return true;
+            return true;
+        }
+
+        return null;
     }
 
     public async  Task<Project> UpdateProject(Project project, int id)
     {
         Project projectById = await GetProjectById(id);
+        if (projectById != null) 
+        {
+            projectById.Name = project.Name;
+            projectById.Description = project.Description;
+            projectById.Status = project.Status;
 
-        projectById.Name = project.Name;
-        projectById.Description = project.Description;
-        projectById.Status = project.Status;
-
-        _dbContext.Update(projectById);
-        _dbContext.SaveChanges();
-        return projectById;
+            _dbContext.Update(projectById);
+            _dbContext.SaveChanges();
+            return projectById;
+        }
+        return null;
     }
 }

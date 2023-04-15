@@ -8,5 +8,5 @@ public interface IUserRepository
     Task<User> GetUserById(int id);
     Task<User> AddUser(User user);
     Task<User> UpdateUser(User user , int id);
-    Task<bool> DeleteUser(int id);
+    Task<bool?> DeleteUser(int id);
 }
