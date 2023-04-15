@@ -34,10 +34,6 @@ public class UserRepository : IUserRepository
     public async Task<User> UpdateUser(User user, int id)
     {
         User userById = await GetUserById(id);
-        if (userById == null)
-        {
-            throw new Exception($"Não achamos o User pelo Id: {id}");
-        }
 
        userById.Name = user.Name;
        userById.Email = user.Email;
@@ -51,14 +47,8 @@ public class UserRepository : IUserRepository
     public async Task<bool> DeleteUser(int id)
     {
         User userById = await GetUserById(id);
-        if (userById == null)
-        {
-            throw new Exception($"Não achamos o User pelo Id: {id}");
-        }
-
         _dbContext.Users.Remove(userById);
         _dbContext.SaveChanges();
-
         return true;
     }
 

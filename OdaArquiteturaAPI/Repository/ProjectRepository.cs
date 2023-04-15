@@ -32,11 +32,7 @@ public class ProjectRepository : IProjectRepository
     public async Task<bool> DeleteProject(int id)
     {
         Project projectById = await GetProjectById(id);
-        if(projectById == null)
-        {
-           throw new Exception($"Não achamos o User pelo Id: {id}");
-        }
-
+        
         _dbContext.Projects.Remove(projectById);
         _dbContext.SaveChanges();
 
@@ -46,10 +42,6 @@ public class ProjectRepository : IProjectRepository
     public async  Task<Project> UpdateProject(Project project, int id)
     {
         Project projectById = await GetProjectById(id);
-        if (projectById == null)
-        {
-            throw new Exception($"Não achamos o User pelo Id: {id}");
-        }
 
         projectById.Name = project.Name;
         projectById.Description = project.Description;

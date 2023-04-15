@@ -22,25 +22,14 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-        var user = await _userRepository.GetAllUsers();
-
-        if (user == null || user.Count == 0)
-        {
-            return NotFound();
-        }
-        return Ok(user);
+        return Ok(await _userRepository.GetAllUsers());
     }
 
 
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUserId(int id)
     {
-        var user = await _userRepository.GetUserById(id);
-        if (user == null)
-        {
-            return NotFound();
-        }
-        return Ok(user);
+        return Ok(await _userRepository.GetUserById(id));
     }
 
     [HttpPost]

@@ -18,24 +18,14 @@ public class ProjectController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Project>>> GetAllProjects()
     {
-        var projects = await _projectRepository.GetAllProjects();
-        if (projects == null)
-        {
-            return NotFound();
-        }
-        return Ok(projects);
+        return Ok(await _projectRepository.GetAllProjects());
     }
 
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Project>> GetProjectId(int id)
     {
-        var project = await _projectRepository.GetProjectById(id);
-        if (project == null)
-        {
-            return NotFound();
-        }
-        return Ok(project);
+        return Ok(await _projectRepository.GetProjectById(id));
     }
 
     [HttpPost]
