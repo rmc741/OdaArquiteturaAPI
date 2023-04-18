@@ -9,4 +9,6 @@ public class Project
     public string? Description { get; set; }
     public StatusProject Status { get; set; } = StatusProject.Pending;
     public string?  Details { get; set; }
+    public int UserId { get; set; }
+    public User User { get; set; }
 }

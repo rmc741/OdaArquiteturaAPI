@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Data\DTO\" />
+    <Folder Include="Maps\" />
   </ItemGroup>
 
 </Project>
